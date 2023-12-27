@@ -53,7 +53,9 @@ public class RegistrationServices {
         Optional<Users> user= Optional.ofNullable(usersRepo.findByGmail(gmail));
 try{
     if(user.isPresent()){
-        if(password!=user.get().getPassword()){
+        if(!password.equals(user.get().getPassword())){
+            log.warn(password);
+            log.warn(user.get().getPassword());
             throw new IoExceptionCustom("400","password is incorrect","1");
         }
         userResponseDto responseDto=UserTouserResponseDto.UserTouserResponseDto(user.get());
